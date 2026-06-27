@@ -42,7 +42,7 @@ export const TOOLS = {
     // project, and would false-positive for any project once Antigravity has been used
     // anywhere. Excluded from auto-detection; only included via explicit --tool or --all.
     signal: () => null,
-    installPaths: () => [join(homedir(), ".gemini", "antigravity", "skills", "loop-engineering")],
+    installPaths: () => [join(homedir(), ".gemini", "antigravity", "skills", "loop")],
   },
   cursor: {
     label: "Cursor",
