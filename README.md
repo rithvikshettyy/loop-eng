@@ -16,9 +16,24 @@ npx loop-engineering install --tool all        # installs for every supported to
 npx loop-engineering install --tool cursor      # installs for one specific tool
 ```
 
-Supported: `claude-code`, `codex`, `windsurf`, `antigravity`, `cursor`.
+Supported tools:
 
-Once installed, ask your agent (inside Claude Code, Codex, Windsurf, etc.) to build a loop spec for your goal — it loads the skill and interviews you for whatever's missing. Authoring the spec (`new`/`harden`) happens inside the agent conversation, not on this CLI; the CLI handles everything mechanical around it.
+| Tool | Install path | Detection signal |
+|---|---|---|
+| Claude Code | `.claude/skills/loop-engineering/` | `.claude/` exists |
+| Codex | `.agents/skills/loop-engineering/` + `~/.codex/skills/…` | `.agents/skills/` exists |
+| Windsurf | `.windsurf/skills/loop-engineering/` | `.windsurf/` exists |
+| Cursor | `.cursor/commands/loop.md` + `.loop/scripts/` | `.cursor/` exists |
+| Kiro | `.kiro/steering/loop-engineering.md` + `.loop/scripts/` | `.kiro/` exists |
+| Trae | `.trae/rules/loop-engineering.md` + `.loop/scripts/` | `.trae/` exists |
+| OpenCode | `.opencode/skills/loop-engineering/` + `~/.config/opencode/skills/…` | `.opencode/` exists |
+| Rovodev | `.rovodev/skills/loop-engineering/` + `~/.rovodev/skills/…` | `.rovodev/` exists |
+| Qoder | `.qoder/skills/loop-engineering/` + `~/.qoder/skills/…` | `.qoder/` exists |
+| Antigravity | `~/.gemini/antigravity/skills/loop-engineering/` (global only) | `--tool antigravity` |
+
+Auto-detection is presence-based — if the tool's config directory exists in your project, it's detected. Antigravity is global-only so it's never auto-detected; use `--tool antigravity` or `--tool all` explicitly.
+
+Once installed, ask your agent (inside Claude Code, Cursor, Kiro, etc.) to build a loop spec for your goal — it loads the skill and interviews you for whatever's missing. Authoring the spec (`new`/`harden`) happens inside the agent conversation, not on this CLI; the CLI handles everything mechanical around it.
 
 ## CLI commands
 
