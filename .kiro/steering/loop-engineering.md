@@ -1,9 +1,9 @@
 ---
-name: loop-engineering
-description: Turn a goal description into a loop spec an AI agent can iterate against autonomously, then optionally run that loop with enforced caps. Use when the user invokes /loop or any sub-command (new, harden, verify, run, status), asks to "build until done" or "iterate until X passes," describes a goal they want an agent to work toward without manual re-prompting each turn, or asks for a spec/PRD meant to drive an autonomous coding agent (Claude Code, Codex, Cursor, Windsurf, Antigravity). Also trigger when a goal description is vague, untestable, or missing a stop condition — hardening weak goal descriptions into loop-ready specs is this skill's primary job, and it refuses to hand a vague goal to an agent loop without fixing it first.
-version: 1.1.0
+name: loop
+description: Turn a goal description into a loop spec an AI agent can iterate against autonomously, then optionally run that loop with enforced caps. Use when the user invokes /loop or any sub-command (new, harden, verify, run, status, init), asks to "build until done" or "iterate until X passes," describes a goal they want an agent to work toward without manual re-prompting each turn, or asks for a spec/PRD meant to drive an autonomous coding agent (Claude Code, Codex, Cursor, Windsurf, Kiro, Trae, OpenCode, Rovodev, Qoder, Antigravity). Also trigger when a goal description is vague, untestable, or missing a stop condition — hardening weak goal descriptions into loop-ready specs is this skill's primary job, and it refuses to hand a vague goal to an agent loop without fixing it first.
+version: 1.2.0
 user-invocable: true
-argument-hint: "[new|harden|verify|run|status] [goal description or path to LOOP_SPEC.md]"
+argument-hint: "[init|new|harden|verify|run|status] [goal description or path to LOOP_SPEC.md]"
 license: MIT
 ---
 
