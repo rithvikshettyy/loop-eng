@@ -3,7 +3,7 @@
 Turn a goal description into a loop-ready spec, install it into your AI coding tool, then verify, run, audit, and cost-estimate the loop — all from one CLI.
 
 ```bash
-npx loop-engineering install
+npx loop-eng install
 ```
 
 No goal description converts cleanly into something an autonomous agent loop can terminate correctly on its own. "Make it look good" has no pass/fail check; a loop built on it either declares false victory or never stops. This package gives your agent a skill that refuses to start looping until the goal has five real things: a concrete end state, a verification command, termination conditions (success + cap + no-progress exit), scope, and an escalation path — then gives you a small CLI to check, run, score, and estimate that loop mechanically, without trusting the agent's own promise to behave.
@@ -11,9 +11,9 @@ No goal description converts cleanly into something an autonomous agent loop can
 ## Install the skill into your tool
 
 ```bash
-npx loop-engineering install                  # auto-detects what's in your project, installs there
-npx loop-engineering install --tool all        # installs for every supported tool
-npx loop-engineering install --tool cursor      # installs for one specific tool
+npx loop-eng install                  # auto-detects what's in your project, installs there
+npx loop-eng install --tool all        # installs for every supported tool
+npx loop-eng install --tool cursor      # installs for one specific tool
 ```
 
 Supported tools:
@@ -38,11 +38,11 @@ Once installed, ask your agent (inside Claude Code, Cursor, Kiro, etc.) to build
 ## CLI commands
 
 ```bash
-npx loop-engineering verify [path]    # checks LOOP_SPEC.md has all 5 required sections, non-placeholder
-npx loop-engineering run [path]       # runs one verification pass, tracks iteration + no-progress state
-npx loop-engineering status [path]    # reads iteration history, no execution
-npx loop-engineering audit            # scores a project's loop-readiness 0-100
-npx loop-engineering cost [path]      # rough token cost estimate before committing to a run
+npx loop-eng verify [path]    # checks LOOP_SPEC.md has all 5 required sections, non-placeholder
+npx loop-eng run [path]       # runs one verification pass, tracks iteration + no-progress state
+npx loop-eng status [path]    # reads iteration history, no execution
+npx loop-eng audit            # scores a project's loop-readiness 0-100
+npx loop-eng cost [path]      # rough token cost estimate before committing to a run
 ```
 
 ### `verify`

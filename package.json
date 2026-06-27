@@ -1,5 +1,5 @@
 {
-  "name": "loop-engineering",
+  "name": "loop-eng",
   "version": "1.0.0",
   "description": "Turn a goal description into a loop-ready spec, install it into Claude Code, Codex, Windsurf, Cursor, Kiro, Trae, OpenCode, Rovodev, Qoder, or Antigravity, then verify, run, audit, and cost-estimate the loop.",
   "type": "module",
@@ -22,6 +22,7 @@
     "agentic"
   ],
   "bin": {
+    "loop-eng": "bin/loop-engineering.mjs",
     "loop-engineering": "bin/loop-engineering.mjs"
   },
   "files": [
@@ -41,10 +42,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/<your-username>/loop-engineering.git"
+    "url": "git+https://github.com/rithvikshettyy/loop-eng.git"
   },
-  "homepage": "https://github.com/<your-username>/loop-engineering#readme",
+  "homepage": "https://github.com/rithvikshettyy/loop-eng#readme",
   "bugs": {
-    "url": "https://github.com/<your-username>/loop-engineering/issues"
+    "url": "https://github.com/rithvikshettyy/loop-eng/issues"
   }
 }
