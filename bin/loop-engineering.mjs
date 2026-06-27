@@ -170,15 +170,15 @@ function cmdCost(argv) {
 }
 
 function printHelp() {
-  console.log(`loop-engineering — turn a goal description into a loop-ready spec, then run it.
+  console.log(`loop-eng — turn a goal description into a loop-ready spec, then run it.
 
 Usage:
-  npx loop-engineering install [--tool <id>|all] [--target <path>]
-  npx loop-engineering verify  [path]                 (default path: ./LOOP_SPEC.md)
-  npx loop-engineering run     [path]
-  npx loop-engineering status  [path]
-  npx loop-engineering audit   [--target <path>] [--badge]
-  npx loop-engineering cost    [path] [--max-iterations N] [--edit-tokens N] [--verify-tokens N]
+  npx loop-eng install [--tool <id>|all] [--target <path>]
+  npx loop-eng verify  [path]                 (default path: ./LOOP_SPEC.md)
+  npx loop-eng run     [path]
+  npx loop-eng status  [path]
+  npx loop-eng audit   [--target <path>] [--badge]
+  npx loop-eng cost    [path] [--max-iterations N] [--edit-tokens N] [--verify-tokens N]
 
 Tool ids for install: ${allToolIds().join(", ")}, or "all"
 
