@@ -1,4 +1,4 @@
-# loop-engineering
+# loop-eng
 
 Turn a goal description into a loop-ready spec, install it into your AI coding tool, then verify, run, audit, and cost-estimate the loop — all from one CLI.
 
@@ -11,29 +11,44 @@ No goal description converts cleanly into something an autonomous agent loop can
 ## Install the skill into your tool
 
 ```bash
-npx loop-eng install                  # auto-detects what's in your project, installs there
+npx loop-eng install                   # auto-detects what's in your project, installs there
 npx loop-eng install --tool all        # installs for every supported tool
-npx loop-eng install --tool cursor      # installs for one specific tool
+npx loop-eng install --tool claude-code  # installs for one specific tool
 ```
 
 Supported tools:
 
 | Tool | Install path | Detection signal |
 |---|---|---|
-| Claude Code | `.claude/skills/loop-engineering/` | `.claude/` exists |
-| Codex | `.agents/skills/loop-engineering/` + `~/.codex/skills/…` | `.agents/skills/` exists |
+| Claude Code | `.claude/skills/loop-engineering/` + `~/.claude/skills/loop-engineering/` | `.claude/` exists |
+| Codex | `.agents/skills/loop-engineering/` + `~/.codex/skills/loop-engineering/` | `.agents/skills/` exists |
 | Windsurf | `.windsurf/skills/loop-engineering/` | `.windsurf/` exists |
 | Cursor | `.cursor/commands/loop.md` + `.loop/scripts/` | `.cursor/` exists |
 | Kiro | `.kiro/steering/loop-engineering.md` + `.loop/scripts/` | `.kiro/` exists |
 | Trae | `.trae/rules/loop-engineering.md` + `.loop/scripts/` | `.trae/` exists |
-| OpenCode | `.opencode/skills/loop-engineering/` + `~/.config/opencode/skills/…` | `.opencode/` exists |
-| Rovodev | `.rovodev/skills/loop-engineering/` + `~/.rovodev/skills/…` | `.rovodev/` exists |
-| Qoder | `.qoder/skills/loop-engineering/` + `~/.qoder/skills/…` | `.qoder/` exists |
-| Antigravity | `~/.gemini/antigravity/skills/loop-engineering/` (global only) | `--tool antigravity` |
+| OpenCode | `.opencode/skills/loop-engineering/` + `~/.config/opencode/skills/loop-engineering/` | `.opencode/` exists |
+| Rovodev | `.rovodev/skills/loop-engineering/` + `~/.rovodev/skills/loop-engineering/` | `.rovodev/` exists |
+| Qoder | `.qoder/skills/loop-engineering/` + `~/.qoder/skills/loop-engineering/` | `.qoder/` exists |
+| Antigravity | `~/.gemini/antigravity/skills/loop/` (global only) | `--tool antigravity` |
 
 Auto-detection is presence-based — if the tool's config directory exists in your project, it's detected. Antigravity is global-only so it's never auto-detected; use `--tool antigravity` or `--tool all` explicitly.
 
-Once installed, ask your agent (inside Claude Code, Cursor, Kiro, etc.) to build a loop spec for your goal — it loads the skill and interviews you for whatever's missing. Authoring the spec (`new`/`harden`) happens inside the agent conversation, not on this CLI; the CLI handles everything mechanical around it.
+Claude Code installs to both project-local and global (`~/.claude/`) so the desktop app loads the skill in any project without a per-project install.
+
+## Skill commands (inside your agent)
+
+Once installed, invoke with `/loop` inside Claude Code, Cursor, Kiro, Antigravity, etc.:
+
+| Command | What it does |
+|---|---|
+| `/loop init` | One-time setup — captures test command, build command, forbidden paths into `LOOP_CONTEXT.md` so future specs don't re-ask |
+| `/loop new <goal>` | Interviews you, converts a vague goal into a complete `LOOP_SPEC.md` with all 5 required sections |
+| `/loop harden` | Runs the linter on an existing spec, fixes exactly what it flags |
+| `/loop verify` | Checks if `LOOP_SPEC.md` is loop-ready — exits 0 or lists what's broken |
+| `/loop run` | Executes the loop: runs the verification command, tracks iterations, enforces the cap, reports `success` / `continue` / `stop-escalate` |
+| `/loop status` | Reads iteration history without running anything |
+
+Start with `/loop init` on a new project, then `/loop new <your goal>`.
 
 ## CLI commands
 
