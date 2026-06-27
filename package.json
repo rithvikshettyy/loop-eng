@@ -1,0 +1,44 @@
+{
+  "name": "loop-engineering",
+  "version": "1.0.0",
+  "description": "Turn a goal description into a loop-ready spec, install it into Claude Code/Codex/Windsurf/Antigravity/Cursor, then verify, run, audit, and cost-estimate the loop.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Rithvik Shetty",
+  "keywords": [
+    "loop-engineering",
+    "ai-agents",
+    "claude-code",
+    "codex",
+    "cursor",
+    "windsurf",
+    "antigravity",
+    "skill",
+    "agentic"
+  ],
+  "bin": {
+    "loop-engineering": "bin/loop-engineering.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "skill",
+    "patterns",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/<your-username>/loop-engineering.git"
+  },
+  "homepage": "https://github.com/<your-username>/loop-engineering#readme",
+  "bugs": {
+    "url": "https://github.com/<your-username>/loop-engineering/issues"
+  }
+}
