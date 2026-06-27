@@ -50,6 +50,48 @@ export const TOOLS = {
       { kind: "cursor-scripts", path: join(root, ".loop", "scripts") },
     ],
   },
+  kiro: {
+    label: "Kiro",
+    signal: (root) => join(root, ".kiro"),
+    installPaths: (root) => [
+      // Kiro uses "Steering" files — individual markdown files in .kiro/steering/.
+      { kind: "kiro-steering", path: join(root, ".kiro", "steering", "loop-engineering.md") },
+      { kind: "kiro-scripts", path: join(root, ".loop", "scripts") },
+    ],
+  },
+  trae: {
+    label: "Trae",
+    signal: (root) => join(root, ".trae"),
+    installPaths: (root) => [
+      // Trae uses "Rules" — individual markdown files in .trae/rules/.
+      { kind: "trae-rule", path: join(root, ".trae", "rules", "loop-engineering.md") },
+      { kind: "trae-scripts", path: join(root, ".loop", "scripts") },
+    ],
+  },
+  opencode: {
+    label: "OpenCode",
+    signal: (root) => join(root, ".opencode"),
+    installPaths: (root) => [
+      join(root, ".opencode", "skills", "loop-engineering"),
+      join(homedir(), ".config", "opencode", "skills", "loop-engineering"),
+    ],
+  },
+  rovodev: {
+    label: "Rovodev",
+    signal: (root) => join(root, ".rovodev"),
+    installPaths: (root) => [
+      join(root, ".rovodev", "skills", "loop-engineering"),
+      join(homedir(), ".rovodev", "skills", "loop-engineering"),
+    ],
+  },
+  qoder: {
+    label: "Qoder",
+    signal: (root) => join(root, ".qoder"),
+    installPaths: (root) => [
+      join(root, ".qoder", "skills", "loop-engineering"),
+      join(homedir(), ".qoder", "skills", "loop-engineering"),
+    ],
+  },
 };
 
 export function detectTools(root) {

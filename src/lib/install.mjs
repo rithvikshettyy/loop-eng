@@ -24,6 +24,45 @@ function copySkillDir(destDir) {
   return { installed: true, path: destDir };
 }
 
+function installScriptsOnly(destDir) {
+  if (existsSync(destDir)) {
+    return { installed: false, path: destDir, reason: "already exists" };
+  }
+  mkdirSync(destDir, { recursive: true });
+  for (const f of readdirSync(join(SKILL_SRC, "scripts"))) {
+    copyFileSync(join(SKILL_SRC, "scripts", f), join(destDir, f));
+    chmodSync(join(destDir, f), 0o755);
+  }
+  return { installed: true, path: destDir };
+}
+
+function installSingleFile(srcFile, destFile) {
+  if (existsSync(destFile)) {
+    return { installed: false, path: destFile, reason: "already exists" };
+  }
+  mkdirSync(dirname(destFile), { recursive: true });
+  copyFileSync(srcFile, destFile);
+  return { installed: true, path: destFile };
+}
+
+function installKiro(root) {
+  const steeringFile = join(root, ".kiro", "steering", "loop-engineering.md");
+  const scriptsDir = join(root, ".loop", "scripts");
+  return [
+    installSingleFile(join(SKILL_SRC, "SKILL.md"), steeringFile),
+    installScriptsOnly(scriptsDir),
+  ];
+}
+
+function installTrae(root) {
+  const ruleFile = join(root, ".trae", "rules", "loop-engineering.md");
+  const scriptsDir = join(root, ".loop", "scripts");
+  return [
+    installSingleFile(join(SKILL_SRC, "SKILL.md"), ruleFile),
+    installScriptsOnly(scriptsDir),
+  ];
+}
+
 function installCursor(root) {
   const results = [];
   const commandPath = join(root, ".cursor", "commands", "loop.md");
@@ -56,6 +95,8 @@ function installCursor(root) {
  */
 export function installTool(toolId, root) {
   if (toolId === "cursor") return installCursor(root);
+  if (toolId === "kiro") return installKiro(root);
+  if (toolId === "trae") return installTrae(root);
   const tool = TOOLS[toolId];
   if (!tool) throw new Error(`Unknown tool: ${toolId}`);
   const paths = tool.installPaths(root);

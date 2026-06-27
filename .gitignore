@@ -1,5 +1,5 @@
 node_modules/
 *.tgz
-.loop/
+.loop/state.json
 .DS_Store
 *.log

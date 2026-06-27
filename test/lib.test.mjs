@@ -27,7 +27,7 @@ Counter file reads "3".
 
 ## Verification
 \`\`\`
-test "$(cat counter.txt 2>/dev/null || echo 0)" = "3"
+node -e "const fs=require('fs');const v=fs.existsSync('counter.txt')?fs.readFileSync('counter.txt','utf8').trim():'0';process.exit(v==='3'?0:1)"
 \`\`\`
 
 ## Termination
@@ -107,6 +107,58 @@ test("detectTools: .claude dir correctly signals claude-code", () => {
   }
 });
 
+// --- detect.mjs: new IDEs ---
+
+test("detectTools: .kiro dir signals kiro", () => {
+  const dir = tmpProject();
+  try {
+    mkdirSync(join(dir, ".kiro"));
+    assert.ok(detectTools(dir).includes("kiro"));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("detectTools: .trae dir signals trae", () => {
+  const dir = tmpProject();
+  try {
+    mkdirSync(join(dir, ".trae"));
+    assert.ok(detectTools(dir).includes("trae"));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("detectTools: .opencode dir signals opencode", () => {
+  const dir = tmpProject();
+  try {
+    mkdirSync(join(dir, ".opencode"));
+    assert.ok(detectTools(dir).includes("opencode"));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("detectTools: .rovodev dir signals rovodev", () => {
+  const dir = tmpProject();
+  try {
+    mkdirSync(join(dir, ".rovodev"));
+    assert.ok(detectTools(dir).includes("rovodev"));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("detectTools: .qoder dir signals qoder", () => {
+  const dir = tmpProject();
+  try {
+    mkdirSync(join(dir, ".qoder"));
+    assert.ok(detectTools(dir).includes("qoder"));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
 // --- install.mjs ---
 
 test("installTool: claude-code installs SKILL.md + scripts, scripts are executable", () => {
@@ -150,6 +202,63 @@ test("installTools: unknown tool id throws", () => {
   const dir = tmpProject();
   try {
     assert.throws(() => installTool("not-a-real-tool", dir));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("installTool: kiro installs steering file and scripts dir", () => {
+  const dir = tmpProject();
+  try {
+    const results = installTool("kiro", dir);
+    assert.equal(results.length, 2);
+    assert.ok(existsSync(join(dir, ".kiro", "steering", "loop-engineering.md")));
+    assert.ok(existsSync(join(dir, ".loop", "scripts", "lint_spec.mjs")));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("installTool: trae installs rules file and scripts dir", () => {
+  const dir = tmpProject();
+  try {
+    const results = installTool("trae", dir);
+    assert.equal(results.length, 2);
+    assert.ok(existsSync(join(dir, ".trae", "rules", "loop-engineering.md")));
+    assert.ok(existsSync(join(dir, ".loop", "scripts", "lint_spec.mjs")));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("installTool: opencode installs full skill dir", () => {
+  const dir = tmpProject();
+  try {
+    const results = installTool("opencode", dir);
+    assert.ok(results.some((r) => r.installed === true));
+    assert.ok(existsSync(join(dir, ".opencode", "skills", "loop-engineering", "SKILL.md")));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("installTool: rovodev installs full skill dir", () => {
+  const dir = tmpProject();
+  try {
+    const results = installTool("rovodev", dir);
+    assert.ok(results.some((r) => r.installed === true));
+    assert.ok(existsSync(join(dir, ".rovodev", "skills", "loop-engineering", "SKILL.md")));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test("installTool: qoder installs full skill dir", () => {
+  const dir = tmpProject();
+  try {
+    const results = installTool("qoder", dir);
+    assert.ok(results.some((r) => r.installed === true));
+    assert.ok(existsSync(join(dir, ".qoder", "skills", "loop-engineering", "SKILL.md")));
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
@@ -297,12 +406,21 @@ test("run_loop.mjs: enforces iteration cap even without a no-progress match", ()
 
 // --- audit.mjs ---
 
-test("auditProject: scores 0 on a completely empty project", () => {
+test("auditProject: spec-related checks all score 0 on a project with no spec", () => {
   const dir = tmpProject();
   try {
     const result = auditProject(dir, LINT_SCRIPT);
-    assert.equal(result.score, 0);
     assert.equal(result.max, 100);
+    // Spec-related checks must be 0; tool-install/git checks may be non-zero
+    // if the user has global skill installs for any supported tool.
+    const specCheck = result.checks.find((c) => c.label === "LOOP_SPEC.md exists");
+    const lintCheck = result.checks.find((c) => c.label === "Spec passes lint");
+    const runCheck = result.checks.find((c) => c.label === "Run history exists");
+    const resolvedCheck = result.checks.find((c) => c.label === "Last run resolved cleanly");
+    assert.equal(specCheck.points, 0);
+    assert.equal(lintCheck.points, 0);
+    assert.equal(runCheck.points, 0);
+    assert.equal(resolvedCheck.points, 0);
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }

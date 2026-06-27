@@ -13,6 +13,11 @@
     "cursor",
     "windsurf",
     "antigravity",
+    "kiro",
+    "trae",
+    "opencode",
+    "rovodev",
+    "qoder",
     "skill",
     "agentic"
   ],
@@ -31,7 +36,8 @@
     "node": ">=18"
   },
   "scripts": {
-    "test": "node --test test/*.test.mjs"
+    "test": "node --test test/*.test.mjs",
+    "build": "node scripts/build.mjs"
   },
   "repository": {
     "type": "git",
