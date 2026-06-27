@@ -165,8 +165,8 @@ test("installTool: claude-code installs SKILL.md + scripts, scripts are executab
   const dir = tmpProject();
   try {
     const results = installTool("claude-code", dir);
-    assert.equal(results.length, 1);
-    assert.equal(results[0].installed, true);
+    assert.ok(results.length >= 1);
+    assert.ok(results.some((r) => r.installed === true));
     const skillPath = join(dir, ".claude", "skills", "loop-engineering", "SKILL.md");
     assert.ok(existsSync(skillPath));
   } finally {

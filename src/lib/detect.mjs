@@ -15,7 +15,10 @@ export const TOOLS = {
   "claude-code": {
     label: "Claude Code",
     signal: (root) => join(root, ".claude"),
-    installPaths: (root) => [join(root, ".claude", "skills", "loop-engineering")],
+    installPaths: (root) => [
+      join(root, ".claude", "skills", "loop-engineering"),
+      join(homedir(), ".claude", "skills", "loop-engineering"),
+    ],
   },
   codex: {
     label: "Codex",

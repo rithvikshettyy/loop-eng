@@ -1,6 +1,6 @@
 {
   "name": "loop-eng",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Turn a goal description into a loop-ready spec, install it into Claude Code, Codex, Windsurf, Cursor, Kiro, Trae, OpenCode, Rovodev, Qoder, or Antigravity, then verify, run, audit, and cost-estimate the loop.",
   "type": "module",
   "license": "MIT",
